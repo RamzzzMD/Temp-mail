@@ -514,7 +514,8 @@ html[data-theme='light'] body::after {
   border-radius: 8px;
 }
 
-.animate-fade-up {
+@layer utilities {
+  .animate-fade-up {
     animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
   }
