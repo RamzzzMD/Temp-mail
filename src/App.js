@@ -9,7 +9,8 @@ import { storage } from './utils/storage.js';
 
 export function App() {
   const el = document.createElement('div');
-  el.className = 'app-shell';
+  // Menambahkan Tailwind untuk layout utama yang bersih
+  el.className = 'app-shell h-screen flex flex-col bg-slate-50 text-slate-900 font-sans overflow-hidden';
 
   const state = {
     domains: [],
@@ -26,22 +27,30 @@ export function App() {
     onGenerate: handleGenerate,
     onClearInbox: handleClearInbox,
   });
+  // Memberikan gaya bayangan dan batas halus pada Sidebar
+  sidebar.el.classList.add('w-full', 'md:w-80', 'bg-white', 'border-r', 'border-slate-200', 'shadow-sm', 'z-10');
 
   const inbox = Inbox({
     onSelect: handleSelectEmail,
     onDelete: handleDeleteEmail,
     onSearch: handleSearch,
   });
+  // Mempercantik area daftar email masuk
+  inbox.el.classList.add('flex-1', 'md:max-w-md', 'border-r', 'border-slate-200', 'bg-white', 'overflow-y-auto');
 
   const mailView = MailView({ onDelete: handleDeleteEmail, onBack: handleBack });
+  // Mempercantik area baca email
+  mailView.el.classList.add('flex-1', 'bg-slate-50', 'overflow-y-auto');
 
   const main = document.createElement('main');
-  main.className = 'app-main';
+  // Memastikan Inbox dan MailView bersebelahan di desktop, dan bertumpuk di HP
+  main.className = 'app-main flex-1 flex flex-col md:flex-row overflow-hidden relative w-full';
   main.dataset.view = 'list';
   main.append(inbox.el, mailView.el);
 
   const layout = document.createElement('div');
-  layout.className = 'app-layout';
+  // Bungkus utama di bawah Header
+  layout.className = 'app-layout flex-1 flex flex-col md:flex-row overflow-hidden';
   layout.append(sidebar.el, main);
 
   el.append(headerEl, layout);
@@ -62,7 +71,7 @@ export function App() {
         await handleGenerate({});
       }
     } catch (err) {
-      showToast(err.message || 'Could not reach the server. Check VITE_API_URL.', { type: 'error' });
+      showToast(err.message || 'Gagal menghubungi server. Periksa VITE_API_URL.', { type: 'error' });
     }
   }
 
@@ -70,9 +79,9 @@ export function App() {
     try {
       const { address } = await api.createAddress(username, domain || state.domains[0]);
       setAddress(address);
-      showToast('New frequency generated', { type: 'success' });
+      showToast('Email baru berhasil dibuat!', { type: 'success' });
     } catch (err) {
-      showToast(err.message || 'Could not generate address.', { type: 'error' });
+      showToast(err.message || 'Gagal membuat alamat email.', { type: 'error' });
     }
   }
 
@@ -95,7 +104,7 @@ export function App() {
       state.total = total;
       inbox.update({ emails, total, activeId: state.activeId, hasSearch: !!state.search });
     } catch (err) {
-      showToast(err.message || 'Could not load inbox.', { type: 'error' });
+      showToast(err.message || 'Gagal memuat kotak masuk.', { type: 'error' });
       inbox.update({ emails: [], total: 0, hasSearch: !!state.search });
     }
   }
@@ -104,7 +113,7 @@ export function App() {
     state.emails = [email, ...state.emails];
     state.total += 1;
     inbox.update({ emails: state.emails, total: state.total, activeId: state.activeId, hasSearch: !!state.search });
-    showToast(`New mail from ${email.fromName || email.from}`, { type: 'mail' });
+    showToast(`Pesan baru dari ${email.fromName || email.from}`, { type: 'success' });
   }
 
   async function handleSelectEmail(id) {
@@ -118,7 +127,7 @@ export function App() {
       state.emails = state.emails.map((m) => (m._id === id ? { ...m, read: true } : m));
       inbox.update({ emails: state.emails, total: state.total, activeId: id, hasSearch: !!state.search });
     } catch (err) {
-      showToast(err.message || 'Could not open email.', { type: 'error' });
+      showToast(err.message || 'Gagal membuka email.', { type: 'error' });
     }
   }
 
@@ -137,9 +146,9 @@ export function App() {
         main.dataset.view = 'list';
       }
       inbox.update({ emails: state.emails, total: state.total, activeId: state.activeId, hasSearch: !!state.search });
-      showToast('Email deleted', { type: 'success' });
+      showToast('Email dihapus', { type: 'success' });
     } catch (err) {
-      showToast(err.message || 'Could not delete email.', { type: 'error' });
+      showToast(err.message || 'Gagal menghapus email.', { type: 'error' });
     }
   }
 
@@ -153,9 +162,9 @@ export function App() {
       inbox.update({ emails: [], total: 0, activeId: null, hasSearch: !!state.search });
       mailView.update({ email: null });
       main.dataset.view = 'list';
-      showToast('Inbox cleared', { type: 'success' });
+      showToast('Kotak masuk dibersihkan', { type: 'success' });
     } catch (err) {
-      showToast(err.message || 'Could not clear inbox.', { type: 'error' });
+      showToast(err.message || 'Gagal membersihkan kotak masuk.', { type: 'error' });
     }
   }
 
