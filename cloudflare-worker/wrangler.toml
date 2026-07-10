@@ -1,0 +1,12 @@
+name = "tempmail-email-worker"
+main = "src/worker.js"
+compatibility_date = "2026-07-09"
+
+# Non-secret config. Point this at your deployed backend's inbound endpoint.
+[vars]
+BACKEND_WEBHOOK_URL = "https://your-backend.example.com/api/inbound"
+
+# WEBHOOK_SECRET is sensitive — do NOT put it here as plain text.
+# After your first `wrangler deploy`, set it with:
+#   wrangler secret put WEBHOOK_SECRET
+# and paste the same value you used for WEBHOOK_SECRET in backend/.env
