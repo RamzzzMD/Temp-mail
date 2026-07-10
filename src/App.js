@@ -18,59 +18,69 @@ export function App() {
   const inbox = Inbox({ onSelect: handleSelectEmail, onDelete: handleDeleteEmail, onSearch: handleSearch });
   const mailView = MailView({ onDelete: handleDeleteEmail, onBack: handleBack });
 
-  sidebar.el.className = 'w-full md:w-[350px] bg-white dark:bg-[#0f0f11] border-r border-slate-200 dark:border-neutral-800 z-10 p-5 md:p-6 overflow-y-auto flex flex-col gap-8 transition-colors duration-300';
-  inbox.el.className = 'flex-1 md:max-w-sm border-r border-slate-200 dark:border-neutral-800 bg-white dark:bg-[#0f0f11] flex flex-col relative transition-colors duration-300';
-  mailView.el.className = 'flex-1 bg-slate-50 dark:bg-[#0a0a0a] flex flex-col relative transition-colors duration-300';
-
-  const appContainer = document.createElement('div');
-  appContainer.className = 'flex flex-col md:flex-row w-full h-[650px] bg-white dark:bg-[#0f0f11] rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-black/50 border border-slate-200 dark:border-neutral-800 overflow-hidden ring-1 ring-slate-900/5 dark:ring-white/5 transition-colors duration-300';
+  // PENGATURAN RESPONSIVE 1: Sidebar menyesuaikan di atas (HP) atau di samping (Desktop)
+  sidebar.el.className = 'w-full lg:w-[320px] xl:w-[350px] shrink-0 bg-white dark:bg-[#0f0f11] border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-neutral-800 z-10 p-5 lg:p-6 overflow-y-auto flex flex-col gap-6 lg:gap-8 transition-colors duration-300';
   
+  // PENGATURAN RESPONSIVE 2: Wadah aplikasi bisa memanjang secara natural di HP, dan fixed di Desktop
+  const appContainer = document.createElement('div');
+  appContainer.className = 'flex flex-col lg:flex-row w-full h-auto lg:h-[80vh] lg:min-h-[700px] bg-white dark:bg-[#0f0f11] rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-black/50 border border-slate-200 dark:border-neutral-800 overflow-hidden ring-1 ring-slate-900/5 dark:ring-white/5 transition-colors duration-300';
+  
+  // PENGATURAN RESPONSIVE 3: Wadah utama Inbox & MailView
   const main = document.createElement('main');
-  main.className = 'flex-1 flex flex-col md:flex-row relative overflow-hidden';
-  main.dataset.view = 'list';
+  main.className = 'flex-1 w-full h-[650px] lg:h-auto flex flex-row relative overflow-hidden';
   main.append(inbox.el, mailView.el);
 
   appContainer.append(sidebar.el, main);
+
+  // Fungsi Cerdas untuk Mengatur Perpindahan Layar di HP
+  function updateMobileView() {
+    if (state.activeId) {
+      // Jika ada email yang sedang dibaca (HP: Tampilkan Baca Email, Sembunyikan Kotak Masuk)
+      inbox.el.className = 'hidden lg:flex w-full lg:w-[320px] xl:w-[380px] shrink-0 lg:border-r border-slate-200 dark:border-neutral-800 bg-white dark:bg-[#0f0f11] flex-col relative transition-colors duration-300';
+      mailView.el.className = 'flex flex-1 w-full bg-slate-50 dark:bg-[#0a0a0a] flex-col relative transition-colors duration-300 overflow-hidden';
+    } else {
+      // Jika tidak ada email yang dibaca (HP: Tampilkan Kotak Masuk, Sembunyikan Baca Email)
+      inbox.el.className = 'flex w-full lg:w-[320px] xl:w-[380px] shrink-0 lg:border-r border-slate-200 dark:border-neutral-800 bg-white dark:bg-[#0f0f11] flex-col relative transition-colors duration-300';
+      mailView.el.className = 'hidden lg:flex flex-1 w-full bg-slate-50 dark:bg-[#0a0a0a] flex-col relative transition-colors duration-300 overflow-hidden';
+    }
+  }
 
   const landingPage = document.createElement('div');
   landingPage.className = 'flex-1 flex flex-col relative w-full items-center';
   
   landingPage.innerHTML = `
-    <!-- Latar Belakang Kotak-kotak -->
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] bg-blue-500/10 dark:bg-blue-600/10 blur-[100px] -z-10 pointer-events-none rounded-full"></div>
 
-    <!-- Hero Section -->
-    <section class="w-full max-w-5xl mx-auto px-4 pt-20 pb-16 text-center z-10 flex-1">
-      <div class="animate-fade-up inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-blue-600 dark:text-blue-400 text-sm font-bold mb-8 shadow-sm">
+    <section class="w-full max-w-5xl mx-auto px-4 pt-16 md:pt-24 pb-12 md:pb-16 text-center z-10 flex-1">
+      <div class="animate-fade-up inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-blue-600 dark:text-blue-400 text-xs md:text-sm font-bold mb-6 md:mb-8 shadow-sm">
         <span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span></span>
         Sistem 100% Aktif & Aman
       </div>
       
-      <h1 class="animate-fade-up animation-delay-100 text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+      <!-- PENGATURAN RESPONSIVE 4: Teks menyesuaikan ukuran layar agar rapi -->
+      <h1 class="animate-fade-up animation-delay-100 text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 leading-tight">
         Email Sementara. <br/> 
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Desain Masa Depan.</span>
       </h1>
       
-      <p class="animate-fade-up animation-delay-200 text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium mb-12">
+      <p class="animate-fade-up animation-delay-200 text-base md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium mb-10 md:mb-12">
         Hindari spam, jaga kotak masuk pribadimu tetap bersih. Dapatkan alamat email anonim gratis yang langsung siap digunakan.
       </p>
       
-      <button id="scroll-to-app" class="animate-fade-up animation-delay-300 animate-float inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-blue-600/30 active:scale-95 cursor-pointer">
+      <button id="scroll-to-app" class="animate-fade-up animation-delay-300 animate-float inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 md:px-8 py-3.5 md:py-4 rounded-2xl font-bold transition-all shadow-lg shadow-blue-600/30 active:scale-95 cursor-pointer">
         Mulai Gunakan
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m7 13 5 5 5-5"/><path d="M12 18V6"/></svg>
       </button>
     </section>
   `;
 
-  // App Wrapper
   const appWrapper = document.createElement('section');
   appWrapper.id = 'app-interface';
   appWrapper.className = 'max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 mb-20 animate-fade-up animation-delay-300';
   appWrapper.appendChild(appContainer);
   landingPage.appendChild(appWrapper);
 
-  // --- FOOTER DENGAN KONTAK SOSIAL MEDIA ---
   const footer = document.createElement('footer');
   footer.className = 'w-full border-t border-slate-200 dark:border-neutral-800 bg-white dark:bg-[#0a0a0a] py-8 transition-colors duration-300 mt-auto z-10 relative';
   footer.innerHTML = `
@@ -79,29 +89,19 @@ export function App() {
         &copy; ${new Date().getFullYear()} TempMail Pro. All rights reserved. <br class="md:hidden"/> Dibuat oleh Developer.
       </div>
       
-      <!-- Deretan Ikon Media Sosial -->
       <div class="flex items-center gap-6">
-        
-        <!-- WhatsApp -->
         <a href="https://wa.me/6281214300828" target="_blank" title="WhatsApp Developer" class="text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
         </a>
-        
-        <!-- Telegram -->
         <a href="https://t.me/cangcuthideung" target="_blank" title="Telegram Developer" class="text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
         </a>
-        
-        <!-- Instagram -->
-        <a href="https://instagram.com/rannzxyyy_" target="_blank" title="Instagram Developer" class="text-slate-400 hover:text-pink-500 dark:hover:text-pink-400 transition-colors transform hover:scale-110">
+        <a href="https://instagram.com/rannzyyy_" target="_blank" title="Instagram Developer" class="text-slate-400 hover:text-pink-500 dark:hover:text-pink-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
         </a>
-        
-        <!-- Website -->
         <a href="https://biolink.ranzzaja.web.id" target="_blank" title="Website Developer" class="text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
         </a>
-        
       </div>
     </div>
   `;
@@ -109,7 +109,6 @@ export function App() {
 
   el.append(headerEl, landingPage);
 
-  // Tombol Scroll Lembut ke Bawah
   setTimeout(() => {
     landingPage.querySelector('#scroll-to-app')?.addEventListener('click', () => {
       appWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -118,7 +117,6 @@ export function App() {
 
   init();
 
-  // --- FUNGSI JAVASCRIPT API ---
   async function init() {
     try {
       const { domains } = await api.getDomains();
@@ -140,9 +138,14 @@ export function App() {
   }
 
   function setAddress(address) {
-    state.address = address; state.activeId = null; main.dataset.view = 'list';
-    storage.setAddress(address); sidebar.update({ address, domain: address.split('@')[1] });
-    mailView.update({ email: null }); watchAddress(address, handleIncomingMail); loadInbox();
+    state.address = address; 
+    state.activeId = null; 
+    storage.setAddress(address); 
+    sidebar.update({ address, domain: address.split('@')[1] });
+    mailView.update({ email: null }); 
+    updateMobileView(); // Panggil fungsi responsive
+    watchAddress(address, handleIncomingMail); 
+    loadInbox();
   }
 
   async function loadInbox() {
@@ -161,7 +164,8 @@ export function App() {
   }
 
   async function handleSelectEmail(id) {
-    state.activeId = id; main.dataset.view = 'detail';
+    state.activeId = id; 
+    updateMobileView(); // Animasi Layar di HP bekerja di sini
     inbox.update({ emails: state.emails, total: state.total, activeId: id, hasSearch: !!state.search });
     mailView.update({ loading: true });
     try {
@@ -172,7 +176,11 @@ export function App() {
     } catch (err) { showToast('Gagal membuka email.', { type: 'error' }); }
   }
 
-  function handleBack() { main.dataset.view = 'list'; }
+  function handleBack() { 
+    state.activeId = null; // Menghapus email aktif saat ditekan "Kembali"
+    mailView.update({ email: null });
+    updateMobileView(); // Animasi layar HP kembali ke Kotak Masuk
+  }
 
   async function handleDeleteEmail(id) {
     try {
@@ -180,7 +188,9 @@ export function App() {
       state.emails = state.emails.filter((m) => m._id !== id);
       state.total = Math.max(0, state.total - 1);
       if (state.activeId === id) {
-        state.activeId = null; mailView.update({ email: null }); main.dataset.view = 'list';
+        state.activeId = null; 
+        mailView.update({ email: null }); 
+        updateMobileView(); // Kembali ke daftar jika di HP
       }
       inbox.update({ emails: state.emails, total: state.total, activeId: state.activeId });
       showToast('Pesan dihapus.', { type: 'success' });
@@ -192,7 +202,9 @@ export function App() {
     try {
       await api.clearInbox(state.address);
       state.emails = []; state.total = 0; state.activeId = null;
-      inbox.update({ emails: [], total: 0 }); mailView.update({ email: null }); main.dataset.view = 'list';
+      inbox.update({ emails: [], total: 0 }); 
+      mailView.update({ email: null }); 
+      updateMobileView(); // Kembali ke daftar jika di HP
       showToast('Seluruh pesan dibersihkan.', { type: 'success' });
     } catch (err) { showToast('Gagal membersihkan inbox.', { type: 'error' }); }
   }
