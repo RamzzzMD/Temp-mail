@@ -1,3 +1,5 @@
+import { ThemeToggle } from './ThemeToggle.js';
+
 export function Header() {
   const el = document.createElement('header');
   el.className = 'w-full bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50';
