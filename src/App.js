@@ -86,7 +86,7 @@ export function App() {
   footer.innerHTML = `
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
       <div class="text-sm font-medium text-slate-500 dark:text-neutral-500 text-center md:text-left">
-        &copy; ${new Date().getFullYear()} TempMail Pro. All rights reserved. <br class="md:hidden"/> Dibuat oleh Developer.
+        &copy; ${new Date().getFullYear()} TempMail. All rights reserved. <br class="md:hidden"/> Dibuat oleh Ranzz.
       </div>
       
       <div class="flex items-center gap-6">
