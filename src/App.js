@@ -61,7 +61,7 @@ export function App() {
       <!-- PENGATURAN RESPONSIVE 4: Teks menyesuaikan ukuran layar agar rapi -->
       <h1 class="animate-fade-up animation-delay-100 text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 leading-tight">
         Email Sementara. <br/> 
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Desain Masa Depan.</span>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Gratis.</span>
       </h1>
       
       <p class="animate-fade-up animation-delay-200 text-base md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium mb-10 md:mb-12">
