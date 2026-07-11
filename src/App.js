@@ -14,32 +14,34 @@ export function App() {
   const state = { domains: [], address: '', emails: [], total: 0, activeId: null, search: '' };
 
   const { el: headerEl } = Header();
-  const sidebar = Sidebar({ onGenerate: handleGenerate, onClearInbox: handleClearInbox });
+  
+  // MENGHUBUNGKAN CALLBACK RIWAYAT KE SIDEBAR
+  const sidebar = Sidebar({ 
+    onGenerate: handleGenerate, 
+    onClearInbox: handleClearInbox,
+    onSelectHistory: handleSelectHistory,
+    onDeleteHistory: handleDeleteHistory
+  });
+  
   const inbox = Inbox({ onSelect: handleSelectEmail, onDelete: handleDeleteEmail, onSearch: handleSearch });
   const mailView = MailView({ onDelete: handleDeleteEmail, onBack: handleBack });
 
-  // PENGATURAN RESPONSIVE 1: Sidebar menyesuaikan di atas (HP) atau di samping (Desktop)
-  sidebar.el.className = 'w-full lg:w-[320px] xl:w-[350px] shrink-0 bg-white dark:bg-[#0f0f11] border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-neutral-800 z-10 p-5 lg:p-6 overflow-y-auto flex flex-col gap-6 lg:gap-8 transition-colors duration-300';
+  sidebar.el.className = 'w-full lg:w-[340px] xl:w-[360px] shrink-0 bg-white dark:bg-[#0f0f11] border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-neutral-800 z-10 p-4 lg:p-5 overflow-y-auto flex flex-col gap-5 transition-colors duration-300';
   
-  // PENGATURAN RESPONSIVE 2: Wadah aplikasi bisa memanjang secara natural di HP, dan fixed di Desktop
   const appContainer = document.createElement('div');
   appContainer.className = 'flex flex-col lg:flex-row w-full h-auto lg:h-[80vh] lg:min-h-[700px] bg-white dark:bg-[#0f0f11] rounded-3xl shadow-2xl shadow-slate-200/50 dark:shadow-black/50 border border-slate-200 dark:border-neutral-800 overflow-hidden ring-1 ring-slate-900/5 dark:ring-white/5 transition-colors duration-300';
   
-  // PENGATURAN RESPONSIVE 3: Wadah utama Inbox & MailView
   const main = document.createElement('main');
   main.className = 'flex-1 w-full h-[650px] lg:h-auto flex flex-row relative overflow-hidden';
   main.append(inbox.el, mailView.el);
 
   appContainer.append(sidebar.el, main);
 
-  // Fungsi Cerdas untuk Mengatur Perpindahan Layar di HP
   function updateMobileView() {
     if (state.activeId) {
-      // Jika ada email yang sedang dibaca (HP: Tampilkan Baca Email, Sembunyikan Kotak Masuk)
       inbox.el.className = 'hidden lg:flex w-full lg:w-[320px] xl:w-[380px] shrink-0 lg:border-r border-slate-200 dark:border-neutral-800 bg-white dark:bg-[#0f0f11] flex-col relative transition-colors duration-300';
       mailView.el.className = 'flex flex-1 w-full bg-slate-50 dark:bg-[#0a0a0a] flex-col relative transition-colors duration-300 overflow-hidden';
     } else {
-      // Jika tidak ada email yang dibaca (HP: Tampilkan Kotak Masuk, Sembunyikan Baca Email)
       inbox.el.className = 'flex w-full lg:w-[320px] xl:w-[380px] shrink-0 lg:border-r border-slate-200 dark:border-neutral-800 bg-white dark:bg-[#0f0f11] flex-col relative transition-colors duration-300';
       mailView.el.className = 'hidden lg:flex flex-1 w-full bg-slate-50 dark:bg-[#0a0a0a] flex-col relative transition-colors duration-300 overflow-hidden';
     }
@@ -58,10 +60,9 @@ export function App() {
         Sistem 100% Aktif & Aman
       </div>
       
-      <!-- PENGATURAN RESPONSIVE 4: Teks menyesuaikan ukuran layar agar rapi -->
       <h1 class="animate-fade-up animation-delay-100 text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 leading-tight">
         Email Sementara. <br/> 
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Gratis.</span>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Desain Masa Depan.</span>
       </h1>
       
       <p class="animate-fade-up animation-delay-200 text-base md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium mb-10 md:mb-12">
@@ -86,7 +87,7 @@ export function App() {
   footer.innerHTML = `
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
       <div class="text-sm font-medium text-slate-500 dark:text-neutral-500 text-center md:text-left">
-        &copy; ${new Date().getFullYear()} TempMail. All rights reserved. <br class="md:hidden"/> Dibuat oleh Ranzz.
+        &copy; ${new Date().getFullYear()} TempMail Pro. All rights reserved. <br class="md:hidden"/> Dibuat oleh Developer.
       </div>
       
       <div class="flex items-center gap-6">
@@ -96,7 +97,7 @@ export function App() {
         <a href="https://t.me/cangcuthideung" target="_blank" title="Telegram Developer" class="text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
         </a>
-        <a href="https://instagram.com/rannzyyy_" target="_blank" title="Instagram Developer" class="text-slate-400 hover:text-pink-500 dark:hover:text-pink-400 transition-colors transform hover:scale-110">
+        <a href="https://instagram.com/rannzxyyy_" target="_blank" title="Instagram Developer" class="text-slate-400 hover:text-pink-500 dark:hover:text-pink-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
         </a>
         <a href="https://biolink.ranzzaja.web.id" target="_blank" title="Website Developer" class="text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors transform hover:scale-110">
@@ -121,29 +122,60 @@ export function App() {
     try {
       const { domains } = await api.getDomains();
       state.domains = domains;
-      sidebar.update({ domains, domain: domains[0] });
+      
+      const history = storage.getHistory();
+      sidebar.update({ domains, domain: domains[0], history });
+      
       const saved = storage.getAddress();
       const savedDomain = saved?.split('@')[1];
-      if (saved && domains.includes(savedDomain)) setAddress(saved);
-      else await handleGenerate({});
-    } catch (err) { showToast(err.message || 'Gagal terhubung ke server.', { type: 'error' }); }
+      if (saved && domains.includes(savedDomain)) {
+        setAddress(saved);
+      } else {
+        await handleGenerate({});
+      }
+    } catch (err) { 
+      showToast(err.message || 'Gagal terhubung ke server.', { type: 'error' }); 
+    }
   }
 
   async function handleGenerate({ username, domain } = {}) {
     try {
       const { address } = await api.createAddress(username, domain || state.domains[0]);
       setAddress(address);
-      showToast('Alamat baru dibuat.', { type: 'success' });
-    } catch (err) { showToast(err.message || 'Gagal membuat alamat.', { type: 'error' }); }
+      showToast('Alamat baru berhasil dibuat!', { type: 'success' });
+    } catch (err) { 
+      showToast(err.message || 'Gagal membuat alamat.', { type: 'error' }); 
+    }
+  }
+
+  // FUNGSI SAAT RIWAYAT DIKLIK (BERALIH ALAMAT)
+  function handleSelectHistory(address) {
+    if (address === state.address) return;
+    setAddress(address);
+    showToast(`Beralih ke alamat ${address}`, { type: 'success' });
+  }
+
+  // FUNGSI MENGHAPUS DARI RIWAYAT
+  function handleDeleteHistory(address) {
+    const updatedHistory = storage.removeHistory(address);
+    sidebar.update({ history: updatedHistory });
+    showToast('Alamat dihapus dari riwayat', { type: 'success' });
   }
 
   function setAddress(address) {
     state.address = address; 
     state.activeId = null; 
     storage.setAddress(address); 
-    sidebar.update({ address, domain: address.split('@')[1] });
+    
+    // Perbarui sidebar dengan alamat aktif dan daftar riwayat terbaru
+    sidebar.update({ 
+      address, 
+      domain: address.split('@')[1],
+      history: storage.getHistory() 
+    });
+    
     mailView.update({ email: null }); 
-    updateMobileView(); // Panggil fungsi responsive
+    updateMobileView();
     watchAddress(address, handleIncomingMail); 
     loadInbox();
   }
@@ -154,7 +186,10 @@ export function App() {
       const { emails, total } = await api.getInbox(state.address, { search: state.search });
       state.emails = emails; state.total = total;
       inbox.update({ emails, total, activeId: state.activeId, hasSearch: !!state.search });
-    } catch (err) { showToast('Gagal memuat inbox.', { type: 'error' }); inbox.update({ emails: [], total: 0 }); }
+    } catch (err) { 
+      showToast('Gagal memuat inbox.', { type: 'error' }); 
+      inbox.update({ emails: [], total: 0 }); 
+    }
   }
 
   function handleIncomingMail(email) {
@@ -165,7 +200,7 @@ export function App() {
 
   async function handleSelectEmail(id) {
     state.activeId = id; 
-    updateMobileView(); // Animasi Layar di HP bekerja di sini
+    updateMobileView(); 
     inbox.update({ emails: state.emails, total: state.total, activeId: id, hasSearch: !!state.search });
     mailView.update({ loading: true });
     try {
@@ -173,13 +208,15 @@ export function App() {
       mailView.update({ email });
       state.emails = state.emails.map((m) => (m._id === id ? { ...m, read: true } : m));
       inbox.update({ emails: state.emails, total: state.total, activeId: id });
-    } catch (err) { showToast('Gagal membuka email.', { type: 'error' }); }
+    } catch (err) { 
+      showToast('Gagal membuka email.', { type: 'error' }); 
+    }
   }
 
   function handleBack() { 
-    state.activeId = null; // Menghapus email aktif saat ditekan "Kembali"
+    state.activeId = null; 
     mailView.update({ email: null });
-    updateMobileView(); // Animasi layar HP kembali ke Kotak Masuk
+    updateMobileView(); 
   }
 
   async function handleDeleteEmail(id) {
@@ -190,11 +227,13 @@ export function App() {
       if (state.activeId === id) {
         state.activeId = null; 
         mailView.update({ email: null }); 
-        updateMobileView(); // Kembali ke daftar jika di HP
+        updateMobileView(); 
       }
       inbox.update({ emails: state.emails, total: state.total, activeId: state.activeId });
       showToast('Pesan dihapus.', { type: 'success' });
-    } catch (err) { showToast('Gagal menghapus pesan.', { type: 'error' }); }
+    } catch (err) { 
+      showToast('Gagal menghapus pesan.', { type: 'error' }); 
+    }
   }
 
   async function handleClearInbox() {
@@ -204,9 +243,11 @@ export function App() {
       state.emails = []; state.total = 0; state.activeId = null;
       inbox.update({ emails: [], total: 0 }); 
       mailView.update({ email: null }); 
-      updateMobileView(); // Kembali ke daftar jika di HP
+      updateMobileView(); 
       showToast('Seluruh pesan dibersihkan.', { type: 'success' });
-    } catch (err) { showToast('Gagal membersihkan inbox.', { type: 'error' }); }
+    } catch (err) { 
+      showToast('Gagal membersihkan inbox.', { type: 'error' }); 
+    }
   }
 
   function handleSearch(value) { state.search = value.trim(); loadInbox(); }
