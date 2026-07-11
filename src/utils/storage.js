@@ -1,7 +1,26 @@
 const KEY_ADDRESS = 'tempmail_current_address';
 const KEY_HISTORY = 'tempmail_address_history';
+const KEY_THEME = 'theme';
 
 export const storage = {
+  // --- Penambahan fungsi Theme agar tidak error 'is not a function' ---
+  getTheme() {
+    try {
+      return localStorage.getItem(KEY_THEME) || 'light';
+    } catch {
+      return 'light';
+    }
+  },
+
+  setTheme(theme) {
+    try {
+      localStorage.setItem(KEY_THEME, theme);
+    } catch (err) {
+      console.error('Gagal menyimpan tema:', err);
+    }
+  },
+
+  // --- Fungsi Address & History ---
   getAddress() {
     try {
       return localStorage.getItem(KEY_ADDRESS) || '';
@@ -33,11 +52,8 @@ export const storage = {
     if (!address) return;
     try {
       let history = this.getHistory();
-      // Hapus alamat jika sudah ada di dalam daftar agar tidak duplikat
       history = history.filter((item) => item !== address);
-      // Masukkan alamat baru ke urutan paling atas
       history.unshift(address);
-      // Batasi riwayat maksimal 10 email terakhir
       if (history.length > 10) {
         history = history.slice(0, 10);
       }
