@@ -9,7 +9,8 @@ import { storage } from './utils/storage.js';
 
 export function App() {
   const el = document.createElement('div');
-  el.className = 'min-h-screen bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-slate-100 font-sans flex flex-col selection:bg-blue-200 dark:selection:bg-blue-900 transition-colors duration-300';
+  // PERBAIKAN: Menambahkan 'relative z-20 w-full' agar posisi web maju ke paling depan layar!
+  el.className = 'relative z-20 w-full min-h-screen bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-slate-100 font-sans flex flex-col selection:bg-blue-200 dark:selection:bg-blue-900 transition-colors duration-300';
 
   const state = { domains: [], address: '', emails: [], total: 0, activeId: null, search: '' };
 
@@ -49,13 +50,10 @@ export function App() {
   const landingPage = document.createElement('div');
   landingPage.className = 'flex-1 flex flex-col relative w-full items-center';
   
-  // PERBAIKAN LANDING PAGE: Dibuat langsung visible tanpa efek opacity-0 yang berisiko menyembunyikan konten
   landingPage.innerHTML = `
-    <!-- Latar Belakang Dekoratif -->
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[350px] bg-blue-500/10 dark:bg-blue-600/15 blur-[100px] -z-10 pointer-events-none rounded-full"></div>
 
-    <!-- Hero Section (Langsung Kelihatan) -->
     <section class="w-full max-w-5xl mx-auto px-4 pt-12 md:pt-20 pb-10 md:pb-14 text-center z-10">
       <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-300 text-xs md:text-sm font-bold mb-6 md:mb-8 shadow-sm">
         <span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span></span>
@@ -78,14 +76,12 @@ export function App() {
     </section>
   `;
 
-  // WADAH APLIKASI (DIJAMIN LANGSUNG TAMPIL JELAS)
   const appWrapper = document.createElement('section');
   appWrapper.id = 'app-interface';
   appWrapper.className = 'max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 mb-20 z-10';
   appWrapper.appendChild(appContainer);
   landingPage.appendChild(appWrapper);
 
-  // FOOTER SOSIAL MEDIA
   const footer = document.createElement('footer');
   footer.className = 'w-full border-t border-slate-200 dark:border-neutral-800 bg-white dark:bg-[#0a0a0a] py-8 transition-colors duration-300 mt-auto z-10 relative';
   footer.innerHTML = `
@@ -95,16 +91,16 @@ export function App() {
       </div>
       
       <div class="flex items-center gap-6">
-        <a href="https://wa.me/6281234567890" target="_blank" title="WhatsApp Developer" class="text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors transform hover:scale-110">
+        <a href="https://wa.me/6281214300828" target="_blank" title="WhatsApp Developer" class="text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
         </a>
-        <a href="https://t.me/username_kamu" target="_blank" title="Telegram Developer" class="text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors transform hover:scale-110">
+        <a href="https://t.me/cangcuthideung" target="_blank" title="Telegram Developer" class="text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
         </a>
-        <a href="https://instagram.com/username_kamu" target="_blank" title="Instagram Developer" class="text-slate-400 hover:text-pink-500 dark:hover:text-pink-400 transition-colors transform hover:scale-110">
+        <a href="https://instagram.com/rannzxyyy_" target="_blank" title="Instagram Developer" class="text-slate-400 hover:text-pink-500 dark:hover:text-pink-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
         </a>
-        <a href="https://namewebsitekamu.com" target="_blank" title="Website Developer" class="text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors transform hover:scale-110">
+        <a href="https://biolink.ranzzaja.web.id" target="_blank" title="Website Developer" class="text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
         </a>
       </div>
