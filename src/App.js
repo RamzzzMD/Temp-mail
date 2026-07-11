@@ -9,7 +9,6 @@ import { storage } from './utils/storage.js';
 
 export function App() {
   const el = document.createElement('div');
-  // PERBAIKAN: Menambahkan 'relative z-20 w-full' agar posisi web maju ke paling depan layar!
   el.className = 'relative z-20 w-full min-h-screen bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-slate-100 font-sans flex flex-col selection:bg-blue-200 dark:selection:bg-blue-900 transition-colors duration-300';
 
   const state = { domains: [], address: '', emails: [], total: 0, activeId: null, search: '' };
@@ -100,7 +99,7 @@ export function App() {
         <a href="https://instagram.com/rannzxyyy_" target="_blank" title="Instagram Developer" class="text-slate-400 hover:text-pink-500 dark:hover:text-pink-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
         </a>
-        <a href="https://biolink.ranzzaja.web.id" target="_blank" title="Website Developer" class="text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors transform hover:scale-110">
+        <a href="https://biolink.ranzzajaah.biz.id" target="_blank" title="Website Developer" class="text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
         </a>
       </div>
@@ -157,7 +156,7 @@ export function App() {
   function handleDeleteHistory(address) {
     const updatedHistory = storage.removeHistory(address);
     sidebar.update({ history: updatedHistory });
-    showToast('Alamat dihapus dari riwayat', { type: 'success' });
+    showToast('Alamat deleted dari riwayat', { type: 'success' });
   }
 
   function setAddress(address) {
@@ -195,6 +194,7 @@ export function App() {
     showToast(`Pesan baru dari ${email.from}`, { type: 'success' });
   }
 
+  // DI SINI PERBAIKANNYA: Menambahkan kata kunci 'async' agar tidak Syntax Error!
   async function handleSelectEmail(id) {
     state.activeId = id; 
     updateMobileView(); 
