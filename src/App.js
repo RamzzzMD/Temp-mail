@@ -61,7 +61,7 @@ export function App() {
       
       <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 leading-tight text-slate-900 dark:text-white">
         Email Sementara. <br/> 
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Desain Masa Depan.</span>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Gratis.</span>
       </h1>
       
       <p class="text-base md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto font-medium mb-8 md:mb-10 leading-relaxed">
@@ -86,7 +86,7 @@ export function App() {
   footer.innerHTML = `
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
       <div class="text-sm font-medium text-slate-500 dark:text-neutral-500 text-center md:text-left">
-        &copy; ${new Date().getFullYear()} TempMail Pro. All rights reserved. <br class="md:hidden"/> Dibuat oleh Developer.
+        &copy; ${new Date().getFullYear()} TempMail Pro. All rights reserved. <br class="md:hidden"/> Dibuat oleh Ranzz.
       </div>
       
       <div class="flex items-center gap-6">
@@ -99,7 +99,7 @@ export function App() {
         <a href="https://instagram.com/rannzxyyy_" target="_blank" title="Instagram Developer" class="text-slate-400 hover:text-pink-500 dark:hover:text-pink-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
         </a>
-        <a href="https://biolink.ranzzajaah.biz.id" target="_blank" title="Website Developer" class="text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors transform hover:scale-110">
+        <a href="https://biolink.ranzzaja.web.id" target="_blank" title="Website Developer" class="text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
         </a>
       </div>
